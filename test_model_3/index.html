@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Iliescu Ruxandra 1105</title>
+
+    <style>
+        .canvasHolder {
+            display: flex;
+            justify-content: center;
+        }
+
+        #myCanvas {
+            border: 5px dashed pink;
+        }
+    </style>
+
+    <script>
+        window.onload = () => {
+            let canvas = document.getElementById('myCanvas');
+            let context = canvas.getContext('2d');
+            let inputNumber = document.getElementById('inputText');
+            let button = document.getElementById('button');
+            let badge = document.getElementById('badge');
+            let colors = 'red, yellow, green, blue, purple, magenta'.split(', ');
+
+
+            function drawSquares(n) {
+                let colorsCnt = 0;
+                xposition = 0;
+                yposition = 0;
+                dimension = 10;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < n; i++) {
+                    context.beginPath();
+                    context.fillStyle = colors[colorsCnt];
+                    context.fillRect(xposition, yposition, dimension, dimension);
+                    xposition += 10 * (i + 1);
+                    yposition += 10 * (i + 1);
+                    dimension += 10;
+
+                    if (colorsCnt > 4) {
+                        colorsCnt = 0;
+                    } else {
+                        colorsCnt++;
+                    }
+
+                    context.stroke();
+                }
+            }
+
+            button.addEventListener('click', () => {
+                let number = parseInt(inputNumber.value);
+                if (number < 1 || number > 10) {
+                    badge.style.display = '';
+                }
+                else {
+                    badge.style.display = 'none';
+                    drawSquares(number);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="canvasHolder">
+        <canvas id="myCanvas" width="550" height="550"></canvas>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <input type="number" id="inputText" class="col-xl-5 col-lg-7 col-md-12" placeholder="1-10">
+            <button type="button" id="button" class="btn btn-info col-xl-7 col-lg-5 col-md-12">Draw</button>
+        </div>
+
+        <span class="badge badge-info" id="badge" style="display: none;">Invalid input!</span>
+    </div>
+</body>
+</html>
